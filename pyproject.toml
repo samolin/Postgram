@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "drf-react"
+version = "0.1.0"
+description = ""
+authors = ["samolin <samolin.vlad@gmail.com>"]
+readme = "README.md"
+packages = [{include = "drf_react"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.4"
+psycopg2-binary = "^2.9.7"
+
+[tool.poetry.group.lints.dependencies]
+autoflake = "^2.2.1"
+black = "^23.7.0"
+isort = "^5.12.0"
+
+[tool.autoflake]
+remove-all-unused-imports = true
+ignore-init-module-imports = true
+remove-unused-variables = true
+in-place = true
+recursive = true
+
+[tool.black]
+line_length = 79
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
