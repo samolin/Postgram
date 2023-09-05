@@ -10,6 +10,9 @@ packages = [{include = "drf_react"}]
 python = "^3.11"
 django = "^4.2.4"
 psycopg2-binary = "^2.9.7"
+djangorestframework = "^3.14.0"
+django-filter = "^23.2"
+djangorestframework-simplejwt = "^5.3.0"
 
 [tool.poetry.group.lints.dependencies]
 autoflake = "^2.2.1"
