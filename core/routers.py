@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from core.auth.viewsets import LoginViewSet, RegisterViewSet, RefreshViewSet
+from core.auth.viewsets import LoginViewSet, RefreshViewSet, RegisterViewSet
 from core.user.viewsets import UserViewSet
 
 router = routers.SimpleRouter()
