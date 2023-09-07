@@ -48,6 +48,11 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(db_index=True, unique=True)
+    bio = models.TextField(null=True)
+    avatar = models.ImageField(null=True)
+    posts_liked = models.ManyToManyField(
+        'core_post.Post', related_name='liked_by'
+    )
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
 
@@ -62,3 +67,15 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def like(self, post):
+        """Like `post` if it hasn't been done yet"""
+        return self.posts_liked.add(post)
+
+    def remove(self, post):
+        """Remove a like from a `post`"""
+        return self.posts_liked.remove(post)
+
+    def has_liked(self, post):
+        """Return True if the user has liked a `post`; else False"""
+        return self.posts_liked.filter(pk=post.pk).exists()
