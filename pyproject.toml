@@ -20,6 +20,10 @@ autoflake = "^2.2.1"
 black = "^23.7.0"
 isort = "^5.12.0"
 
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^7.4.2"
+
 [tool.autoflake]
 remove-all-unused-imports = true
 ignore-init-module-imports = true
