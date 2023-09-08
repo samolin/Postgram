@@ -21,8 +21,9 @@ black = "^23.7.0"
 isort = "^5.12.0"
 
 
+
 [tool.poetry.group.tests.dependencies]
-pytest = "^7.4.2"
+pytest-django = "^4.5.2"
 
 [tool.autoflake]
 remove-all-unused-imports = true
@@ -30,6 +31,7 @@ ignore-init-module-imports = true
 remove-unused-variables = true
 in-place = true
 recursive = true
+exclude = 'tests.py, fixtures'
 
 [tool.black]
 line_length = 79
