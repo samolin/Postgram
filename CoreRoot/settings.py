@@ -39,12 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # external packages app
     'rest_framework',
     'rest_framework_simplejwt',
+    # apps
     'core',
-    'core.auth',
     'core.user',
+    'core.auth',
     'core.post',
+    'core.comment',
 ]
 
 MIDDLEWARE = [
