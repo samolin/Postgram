@@ -31,7 +31,7 @@ ignore-init-module-imports = true
 remove-unused-variables = true
 in-place = true
 recursive = true
-exclude = 'tests.py, fixtures'
+exclude = 'tests.py, fixtures, tests'
 
 [tool.black]
 line_length = 79
