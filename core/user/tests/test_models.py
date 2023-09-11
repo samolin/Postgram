@@ -8,7 +8,7 @@ data_user = {
     "first_name": "Test",
     "last_name": "User",
     "password": "test_password",
-}
+    }
 
 
 @pytest.mark.django_db
