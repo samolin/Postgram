@@ -15,16 +15,7 @@ class CommentSerializer(AbstractSerializer):
     post = serializers.SlugRelatedField(
         queryset=Post.objects.all(), slug_field='public_id'
     )
-
-    def validate_author(self, value):
-        if self.context["request"].user != value:
-            raise ValidationError("You can't create a post for another user.")
-        return value
-
-    def validate_post(self, value):
-        if self.instance:
-            return self.instance.post
-        return value
+    liked = serializers.SerializerMethodField()
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -38,6 +29,25 @@ class CommentSerializer(AbstractSerializer):
         instance = super().update(instance, validated_data)
         return instance
 
+    def validate_author(self, value):
+        if self.context["request"].user != value:
+            raise ValidationError("You can't create a post for another user.")
+        return value
+
+    def validate_post(self, value):
+        if self.instance:
+            return self.instance.post
+        return value
+
+    def get_liked(self, instance):
+        request = self.context.get('request', None)
+        if request is None or request.is_anonymous:
+            return False
+        return request.user.has_liked_comment(instance)
+
+    def get_likes_count(self, instance):
+        return instance.commented_by.count()
+
     class Meta:
         model = Comment
         # List of all the fields that can be included in a
@@ -47,6 +57,8 @@ class CommentSerializer(AbstractSerializer):
             'post',
             'author',
             'body',
+            'liked',
+            'likes_count',
             'edited',
             'created',
             'updated',

@@ -14,6 +14,12 @@ class PostSerializer(AbstractSerializer):
     liked = serializers.SerializerMethodField()
     likes_count = serializers.SerializerMethodField()
 
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        author = User.objects.get_object_by_public_id(rep["author"])
+        rep["author"] = UserSerializer(author).data
+        return rep
+
     def update(self, instance, validated_data):
         if not instance.edited:
             validated_data['edited'] = True
@@ -24,12 +30,6 @@ class PostSerializer(AbstractSerializer):
         if self.context['request'].user != value:
             raise ValidationError("You can't create a post for another user.")
         return value
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        author = User.objects.get_object_by_public_id(rep["author"])
-        rep["author"] = UserSerializer(author).data
-        return rep
 
     def get_liked(self, instance):
         request = self.context.get('request', None)

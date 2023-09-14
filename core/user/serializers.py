@@ -8,8 +8,11 @@ class UserSerializer(AbstractSerializer):
         fields = [
             'id',
             'username',
+            'name',
             'first_name',
             'last_name',
+            'bio',
+            'avatar',
             'email',
             'is_active',
             'created',
