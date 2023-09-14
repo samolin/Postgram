@@ -8,6 +8,10 @@ from django.db import models
 from core.abstract.models import AbstractManager, AbstractModel
 
 
+def user_directory_path(instance, filename):
+    return f"user_{0}/{1}".format(instance.public_id, filename)
+
+
 class UserManager(BaseUserManager, AbstractManager):
     def create_user(self, username, email, password=None, **kwargs):
         """Create and return a User with an email, phone, number, username and password"""
@@ -49,7 +53,9 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(db_index=True, unique=True)
     bio = models.TextField(null=True)
-    avatar = models.ImageField(null=True)
+    avatar = models.ImageField(
+        null=True, blank=True, upload_to=user_directory_path
+    )
     posts_liked = models.ManyToManyField(
         'core_post.Post', related_name='liked_by'
     )
