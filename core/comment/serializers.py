@@ -16,6 +16,7 @@ class CommentSerializer(AbstractSerializer):
         queryset=Post.objects.all(), slug_field='public_id'
     )
     liked = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -41,7 +42,7 @@ class CommentSerializer(AbstractSerializer):
 
     def get_liked(self, instance):
         request = self.context.get('request', None)
-        if request is None or request.is_anonymous:
+        if request is None or request.user.is_anonymous:
             return False
         return request.user.has_liked_comment(instance)
 
